@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PackageId>Resolvr</PackageId>
+    <Version>0.7.0</Version>
+    <Author>GabrielMaia-Dev</Author>
+    <PackageTags>Results</PackageTags>
+    <Description>
+      Simple and extensible Results library.
+    </Description>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
