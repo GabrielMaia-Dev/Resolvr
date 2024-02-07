@@ -26,19 +26,12 @@ namespace Resolvr
             => new Result<T>();
         public static Result<T> Ok<T>(T obj)
             => new Result<T>(obj);
-        public static Result<T> Fail<T>(Error error)
-            => new Result<T>(error);
-        public static Result<T> ErrorIf<T>(bool condition, Error error)
-            => condition ? error : Ok<T>();
-        public static Result<T> ErrorIfNull<T>(T? value, Error error)
-            => value is null ? error : Ok(value);
-
         public static Result Ok()
             => new Result();
-        public static Result Fail(Error error)
-            => error;
-        public static Result FailIf(bool condition, Error error)
-            => condition ? error : Ok();
+        public static Result<T> ErrorIf<T>(bool condition, Error? error = null)
+            => condition ? (error ?? new Error()) : Ok<T>();
+        public static Result ErrorIf(bool condition, Error? error = null)
+            => condition ? (error ?? new Error()) : Ok();
     }
 
     public class Result<T> : Result
