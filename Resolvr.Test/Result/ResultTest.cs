@@ -105,14 +105,14 @@ namespace Test
         {
             Assert.True(result.IsSuccess);
             Assert.False(result.IsError);
-            Assert.NotNull(result.ObjectValue);
+            Assert.Null(result.ObjectValue);
             Assert.Null(result.Error);
         }
         private void IsOkWithValue(Result result)
         {
             Assert.True(result.IsSuccess);
             Assert.False(result.IsError);
-            Assert.Null(result.ObjectValue);
+            Assert.NotNull(result.ObjectValue);
             Assert.Null(result.Error);
         }
     }
