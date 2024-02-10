@@ -16,7 +16,7 @@ namespace Test
             
             Assert.True(result.IsError);
             Assert.False(result.IsSuccess);
-            Assert.Equal(ErrorMessage, result.Error.Message);
+            Assert.Equal(ErrorMessage, result.ErrorValue.Message);
         }
 
         [Fact]

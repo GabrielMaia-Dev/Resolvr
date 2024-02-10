@@ -4,50 +4,74 @@ namespace Resolvr
 {
     public static class ResultExt
     {
-        public static Tresp Map<T, Tresp>(this Result<T> result, Func<T, Tresp> mapSuccess, Func<Result, Tresp> mapError)
+        #region Mapping
+        public static Tresp Map<T, Tresp>(this Result<T> result, Func<T, Tresp> mapSuccess, Func<Error, Tresp> mapError)
         {
             if(result.IsSuccess) return  mapSuccess.Invoke(result.Value);
-            return mapError.Invoke(result.Error);
+            return mapError.Invoke(result.ErrorValue);
         }
-        public static Tresp Map<Tresp>(this Result result, Func<Tresp> mapSuccess, Func<Result, Tresp> mapError)
+        public static Tresp Map<Tresp>(this Result result, Func<Tresp> mapSuccess, Func<Error, Tresp> mapError)
         {
             if(result.IsSuccess) return  mapSuccess.Invoke();
-            return mapError.Invoke(result.Error);
+            return mapError.Invoke(result.ErrorValue);
         }
+        #endregion
 
-        public static Result MapError(this Result result, Func<Error, Result> mapError)
+        #region Error Handling
+        public static Result Catch(this Result result, Func<Error, Result> mapError)
         {
             if(result.IsSuccess) return result;
-            return mapError.Invoke(result.Error);
+            return mapError.Invoke(result.ErrorValue);
         }
-        public static Result<T> MapError<T>(this Result<T> result, Func<Error, Result<T>> mapError)
+        public static Result<T> Catch<T>(this Result<T> result, Func<Error, Result<T>> mapError)
         {
             if(result.IsSuccess) return result;
-            return mapError.Invoke(result.Error);
+            return mapError.Invoke(result.ErrorValue);
         }
+        #endregion
 
-
-        public static Result MapSuccess(this Result result, Func<Result> mapSuccess)
+        #region Conditional Execution
+        public static void OnSuccess(this Result result, Action onSuccess)
         {
-            if(result.IsError) return result;
-            return mapSuccess.Invoke();
+            if(result.IsSuccess) onSuccess.Invoke();
         }
-        public static Result<T> MapSuccess<T>(this Result<T> result, Func<T, Result<T>> mapSuccess)
+        public static void OnSuccess<T>(this Result<T> result, Action<T> onSuccess)
         {
-            if(result.IsError) return result;
-            return mapSuccess.Invoke(result.Value);
+            if(result.IsSuccess) onSuccess.Invoke(result.Value);
         }
-        public static Result MapSuccess(this Result result, Action mapSuccess)
+        public static void OnError(this Result result, Action mapSuccess)
         {
-            if(result.IsError) return result;
-            mapSuccess.Invoke();
-            return result;
+            if(result.IsError) mapSuccess.Invoke();
         }
-        public static Result<T> MapSuccess<T>(this Result<T> result, Action<T> mapSuccess)
+        public static void OnError<T>(this Result<T> result, Action<Error> mapSuccess)
         {
-            if(result.IsError) return result;
-            mapSuccess.Invoke(result.Value);
-            return result.Value;
+            if(result.IsError)  mapSuccess.Invoke(result.ErrorValue);
         }
+        public static void Match(this Result result, Action mapSuccess, Action<Error> mapError)
+        {
+            if(result.IsSuccess)  mapSuccess.Invoke();
+            else mapError.Invoke(result.ErrorValue);
+        }
+        public static void Match<T>(this Result<T> result, Action<T> mapSuccess, Action<Error> mapError)
+        {
+            if(result.IsSuccess)  mapSuccess.Invoke(result.Value);
+            else mapError.Invoke(result.ErrorValue);
+        }
+        #endregion
+        
+        #region Execute Or Throw
+        public static T Unwrap<T>(this Result<T> result, Exception? exception = null)
+        {
+            if(result.IsSuccess) return result.Value;
+            var ex = exception ?? new UnwrapException("Expected a success result.");
+            throw ex; 
+        }
+        public static Error UnwrapError(this Result result, Exception? exception = null)
+        {
+            if(result.IsError) return result.ErrorValue;
+            var ex = exception ?? new UnwrapException("Expected a error result."); 
+            throw ex; 
+        }
+        #endregion
     }
 }
