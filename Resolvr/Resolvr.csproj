@@ -2,13 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageId>Resolvr</PackageId>
-    <Version>0.7.0</Version>
-    <Author>GabrielMaia-Dev</Author>
-    <PackageTags>Results</PackageTags>
-    <Description>
-      Simple and extensible Results library.
-    </Description>
     <Nullable>enable</Nullable>
+
+
+    <PackageId>Resolvr</PackageId>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>GabrielMaia-Dev</Authors>
+    <PackageTags>Result Pattern</PackageTags>
+    <Description>Simple and extensible result pattern implementation.</Description>
+    <RepositoryUrl>https://github.com/GabrielMaia-Dev/Resolvr</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Include="..\icon.png" Pack="true" Visible="false" PackagePath="icon.png" />
+  </ItemGroup>
 </Project>
