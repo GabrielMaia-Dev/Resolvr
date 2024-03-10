@@ -1,10 +1,12 @@
+using System;
+using System.Threading.Tasks;
 using Resolvr;
 using Resolvr.Continuation;
 using Xunit;
 
 namespace Test
 {
-    public class SyncronousContinuationTest
+    public class SynchronousContinuationTest
     {
         [Fact]
         public void SuccessTypedResult_To_Result()

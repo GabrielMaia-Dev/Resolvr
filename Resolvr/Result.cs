@@ -50,18 +50,6 @@ namespace Resolvr
         /// </summary>
         public static Result Error(Error? error = null)
             => new Result(error ?? new Error());
-
-        // /// <summary>
-        // /// Create a success if condition is true, with an optional error
-        // /// </summary>
-        // public static Result OkIf(bool condition, Error? error = null)
-        //     => condition ? new Result() : (error ?? new Error());
-        
-        // /// <summary>
-        // /// Create a error if condition is true, with an optional error
-        // /// </summary>
-        // public static Result ErrorIf(bool condition, Error? error = null)
-        //     => condition ? (error ?? new Error()) : Ok();
     }
 
 

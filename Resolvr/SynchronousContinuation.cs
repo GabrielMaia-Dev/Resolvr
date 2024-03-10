@@ -2,10 +2,10 @@ using System;
 
 namespace Resolvr.Continuation
 {
-    public static class SyncronousContinuationExt
+    public static class SynchronousContinuationExt
     {
         
-        #region Sincronos Continuation
+        #region Synchronous Continuation
         public static Result Then(this Result result, Func<Result> then)
         {
             if(result.IsError) return result;
